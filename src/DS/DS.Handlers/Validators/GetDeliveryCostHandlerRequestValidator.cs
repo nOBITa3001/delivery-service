@@ -1,7 +1,7 @@
 ﻿using DS.Handlers.Requests;
 using FluentValidation;
 
-namespace HBFA.Handlers.Validators
+namespace DS.Handlers.Validators
 {
     public class GetDeliveryCostHandlerRequestValidator : AbstractValidator<GetDeliveryCostHandlerRequest>
     {

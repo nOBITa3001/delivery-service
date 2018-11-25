@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DS.Contracts\DS.Contracts.csproj" />
     <ProjectReference Include="..\DS.Handlers\DS.Handlers.csproj" />
   </ItemGroup>
 
