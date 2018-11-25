@@ -1,4 +1,5 @@
-﻿using DS.Handlers.Responses;
+﻿using DS.Dtos.ResponseMessages;
+using DS.Handlers.Responses;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http;
@@ -37,7 +38,7 @@ namespace DS.API.IntegrationTests.Controllers.V1
             WhenRequestIsHandled();
 
             ThenResponseShouldBeUnsuccessfulWithStatusCode(HttpStatusCode.NotFound);
-            ThenResponseShouldContainMessage("No Such Route");
+            ThenResponseShouldContainMessage(ResponseMessages.DeliveryRoute.NotFound);
             ThenPayloadShouldBeNull();
         }
 

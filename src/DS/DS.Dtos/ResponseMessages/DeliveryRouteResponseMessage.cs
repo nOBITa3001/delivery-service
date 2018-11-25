@@ -5,6 +5,7 @@
         public static class DeliveryRoute
         {
             public const string CreateDeliveryRouteDtoRequired = "Create delivery route dto cannot be null.";
+            public const string NotFound = "No Such Route";
         }
     }
 }
