@@ -20,6 +20,7 @@ namespace DS.API.Controllers.V1
         [HttpGet("{route}/Cost")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public virtual async Task<ActionResult<IOperationResponse<GetDeliveryCostHandlerResponse>>> GetCost(string route)
         {
