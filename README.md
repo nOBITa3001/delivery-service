@@ -1,6 +1,6 @@
-# Delivery service #
+# Delivery service
 
-## Getting Started ##
+## Getting Started
 
 This instruction provides you how to build and run this project on your local machine for testing purpose.
 
@@ -48,3 +48,17 @@ Following steps below to get a development env running
 λ cd delivery-service/src/
 λ dotnet test
 ```
+
+## Project details
+
+Here is the application’s layered architecture:
+
+![application's structure](https://github.com/nOBITa3001/delivery-service/blob/master/application-structure.png)
+
+- DS.API - provides a way to communicate with clients
+- DS.Handlers - validates, processes and controls workflow for all requests from the API. It is a business layer
+- DS.DomainModel - contains all business domains and provides factories for creating validated domains
+- DS.DataAccess - is a layer for providing how to communicate with persistent storage
+- DS.Infrastructure/DA.Infrastructure.web - provide fundamental functions for others
+- DS.Contract - is a main place if you are looking for an interface among projects
+- DS.Dtos – provides all data transfer objects!
