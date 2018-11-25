@@ -6,7 +6,7 @@ namespace DS.Handlers.Requests
     {
         public string Route { get; }
 
-        public GetTheCheapestDeliveryCostHandlerRequest(string route, int maxRouteRepeat, int? maxDeliveryCost, int? maxStop)
+        public GetTheCheapestDeliveryCostHandlerRequest(string route)
         {
             Route = route;
         }

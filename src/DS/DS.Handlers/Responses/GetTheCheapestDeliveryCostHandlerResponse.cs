@@ -4,11 +4,11 @@ namespace DS.Handlers.Responses
 {
     public class GetTheCheapestDeliveryCostHandlerResponse : HandlerResponseBase
     {
-        public int? TheCheapestDeliveryCos { get; }
+        public int? TheCheapestDeliveryCost { get; }
 
-        public GetTheCheapestDeliveryCostHandlerResponse(int? theCheapestDeliveryCos)
+        public GetTheCheapestDeliveryCostHandlerResponse(int? theCheapestDeliveryCost)
         {
-            TheCheapestDeliveryCos = theCheapestDeliveryCos;
+            TheCheapestDeliveryCost = theCheapestDeliveryCost;
         }
     }
 }
