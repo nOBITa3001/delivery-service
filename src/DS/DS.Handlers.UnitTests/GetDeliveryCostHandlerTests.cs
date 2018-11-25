@@ -23,6 +23,7 @@ namespace DS.Handlers.UnitTests
     {
         private const string _validRoute = "A-B-E";
         private const string _routeShouldNotBeEmpty = "'Route' should not be empty.";
+        private const string _routeIsNotInTheCorrectFormat = "'Route' is not in the correct format.";
 
         private readonly IDeliveryRouteReadOnlyRepository _deliveryRouteReadOnlyRepository;
         private readonly IRouteFactory _routeFactory;
@@ -51,9 +52,26 @@ namespace DS.Handlers.UnitTests
             WhenRequestIsHandled();
 
             ThenResponseShouldBeUnsuccessfulWithStatusCode(HttpStatusCode.BadRequest);
-            ThenMessageShouldBe(_routeShouldNotBeEmpty);
+            ThenMessageShouldContain(_routeShouldNotBeEmpty);
             ThenPayloadShouldBeNull();
             ThenLoggerShouldBeCalledAndContainsMessage(LogLevel.Warning, 1, _routeShouldNotBeEmpty);
+            ThenRouteRepositoryShouldNotBeCalled();
+        }
+
+        [Theory]
+        [InlineData("A")]
+        [InlineData("AB")]
+        [InlineData("A:B:C")]
+        public void HandleAsync_WhenRouteIsNotValid_ReturnsBadRequest(string route)
+        {
+            GivenRequest(route);
+
+            WhenRequestIsHandled();
+
+            ThenResponseShouldBeUnsuccessfulWithStatusCode(HttpStatusCode.BadRequest);
+            ThenMessageShouldBe(_routeIsNotInTheCorrectFormat);
+            ThenPayloadShouldBeNull();
+            ThenLoggerShouldBeCalledAndContainsMessage(LogLevel.Warning, 1, _routeIsNotInTheCorrectFormat);
             ThenRouteRepositoryShouldNotBeCalled();
         }
 

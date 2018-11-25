@@ -48,6 +48,8 @@ namespace DS.Handlers.UnitTests
             }
         }
 
+        protected void ThenMessageShouldContain(string errorMessage) => Response.Messages.Should().Contain(errorMessage);
+
         protected void ThenMessageShouldBe(string errorMessage) => Response.Messages.Single().Should().Be(errorMessage);
 
         protected void ThenPayloadShouldBeNull() => Response.Payload.Should().BeNull();
