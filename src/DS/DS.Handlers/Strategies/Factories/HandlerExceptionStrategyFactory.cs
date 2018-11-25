@@ -16,6 +16,8 @@ namespace DS.Handlers.Strategies.Factories
         {
             switch (exception)
             {
+                case DomainModelException ex:
+                    return new HandlerDomainModelExceptionStrategy<TRequest, TResponse>(request, logger, ex);
                 case InvalidArgumentException ex:
                     return new HandlerInvalidArgumentExceptionStrategy<TRequest, TResponse>(request, logger, ex);
                 case ValidationException ex:
