@@ -20,7 +20,7 @@ namespace DS.Handlers
 {
     public class GetPossibleDeliveryRoutesHandler : HandlerBase<GetPossibleDeliveryRoutesHandlerRequest, GetPossibleDeliveryRoutesHandlerResponse>
     {
-        private int possibleRoute = 0;
+        private int _possibleRoute = 0;
 
         private readonly IDeliveryRouteReadOnlyRepository _deliveryRouteReadOnlyRepository;
         private readonly IRouteFactory _routeFactory;
@@ -87,7 +87,7 @@ namespace DS.Handlers
                 );
             }
 
-            return possibleRoute;
+            return _possibleRoute;
         }
 
         private void FindRoutes(string coveredRoute, ref Dictionary<string, int> visited, DeliveryRoute route, string end, int maxStop, int currentStop,
@@ -164,7 +164,7 @@ namespace DS.Handlers
 
         private bool ExceedMaxDeliveryCost(int aggregateDeliveryCost, int maxDeliveryCost) => aggregateDeliveryCost >= maxDeliveryCost;
 
-        private void IncreasePossibleDeliveryRoute() => ++possibleRoute;
+        private void IncreasePossibleDeliveryRoute() => ++_possibleRoute;
 
         private bool AbleToRepeatTheSameRoute(int maxRouteRepeat) => maxRouteRepeat < 2;
 
