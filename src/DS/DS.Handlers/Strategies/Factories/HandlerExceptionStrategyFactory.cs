@@ -20,8 +20,6 @@ namespace DS.Handlers.Strategies.Factories
                     return new HandlerDomainModelExceptionStrategy<TRequest, TResponse>(request, logger, ex);
                 case DataAccessNotFoundException ex:
                     return new HandlerDataAccessNotFoundExceptionStrategy<TRequest, TResponse>(request, logger, ex);
-                case InvalidArgumentException ex:
-                    return new HandlerInvalidArgumentExceptionStrategy<TRequest, TResponse>(request, logger, ex);
                 case ValidationException ex:
                     return new HandlerValidationExceptionStrategy<TRequest, TResponse>(request, logger, ex);
                 default:
