@@ -41,5 +41,17 @@ namespace DS.API.Controllers.V1
                 new GetPossibleDeliveryRoutesHandlerRequest(route, maxRouteRepeat, maxDeliveryCost, maxStop)
             );
         }
+
+        [HttpGet("{route}/TheCheapestCost")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public virtual async Task<ActionResult<IOperationResponse<GetTheCheapestDeliveryCostHandlerResponse>>> GetTheCheapestCost(string route)
+        {
+            return await CallHandlerAsync<GetTheCheapestDeliveryCostHandlerRequest, GetTheCheapestDeliveryCostHandlerResponse>
+            (
+                new GetTheCheapestDeliveryCostHandlerRequest(route)
+            );
+        }
     }
 }

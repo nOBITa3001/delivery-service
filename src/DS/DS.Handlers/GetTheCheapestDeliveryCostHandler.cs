@@ -18,18 +18,18 @@ using System.Threading.Tasks;
 
 namespace DS.Handlers
 {
-    public class GetPossibleDeliveryRoutesHandler : HandlerBase<GetPossibleDeliveryRoutesHandlerRequest, GetPossibleDeliveryRoutesHandlerResponse>
+    public class GetTheCheapestDeliveryCostHandler : HandlerBase<GetTheCheapestDeliveryCostHandlerRequest, GetTheCheapestDeliveryCostHandlerResponse>
     {
-        private int _possibleRoute = 0;
+        private int? _theCheapestDeliveryCost;
 
         private readonly IDeliveryRouteReadOnlyRepository _deliveryRouteReadOnlyRepository;
         private readonly IRouteFactory _routeFactory;
 
-        public GetPossibleDeliveryRoutesHandler(
+        public GetTheCheapestDeliveryCostHandler(
             IDeliveryRouteReadOnlyRepository deliveryRouteReadOnlyRepository,
             IRouteFactory routeFactory,
-            ILogger<GetPossibleDeliveryRoutesHandler> logger,
-            IValidator<GetPossibleDeliveryRoutesHandlerRequest> validator,
+            ILogger<GetTheCheapestDeliveryCostHandler> logger,
+            IValidator<GetTheCheapestDeliveryCostHandlerRequest> validator,
             IHandlerExceptionStrategyFactory handlerExceptionStrategyFactory)
             : base(logger, validator, handlerExceptionStrategyFactory)
         {
@@ -37,16 +37,16 @@ namespace DS.Handlers
             _routeFactory = routeFactory;
         }
 
-        protected override async Task<IOperationResponse<GetPossibleDeliveryRoutesHandlerResponse>> HandleAsync(GetPossibleDeliveryRoutesHandlerRequest request)
+        protected override async Task<IOperationResponse<GetTheCheapestDeliveryCostHandlerResponse>> HandleAsync(GetTheCheapestDeliveryCostHandlerRequest request)
         {
             var deliveryRoutes = await _deliveryRouteReadOnlyRepository.GetAllAsync();
             if (deliveryRoutes == null || !deliveryRoutes.Any())
                 throw new DataAccessNotFoundException(ResponseMessages.Route.DoesNotExist);
 
             var routes = BuildRoute(request.Route);
-            var possibleRoute = CalculatePossibleDeliveryRoute(routes, request.MaxRouteRepeat, request.MaxDeliveryCost, request.MaxStop, deliveryRoutes);
+            var theCheapestDeliveryCost = CalculateTheCheapestDeliveryCost(routes, deliveryRoutes);
 
-            return Success(new GetPossibleDeliveryRoutesHandlerResponse(possibleRoute));
+            return Success(new GetTheCheapestDeliveryCostHandlerResponse(theCheapestDeliveryCost));
         }
 
         #region Private Methods
@@ -63,7 +63,7 @@ namespace DS.Handlers
             return _routeFactory.Create(dto);
         }
 
-        private int CalculatePossibleDeliveryRoute(Route route, int maxRouteRepeat, int? maxDeliveryCost, int? maxStop, IEnumerable<DeliveryRoute> deliveryRoutes)
+        private int? CalculateTheCheapestDeliveryCost(Route route, IEnumerable<DeliveryRoute> deliveryRoutes)
         {
             var path = string.Empty;
             var visited = new Dictionary<string, int>();
@@ -71,74 +71,49 @@ namespace DS.Handlers
             var deliveryRoutesOfStart = deliveryRoutes.Where(deliveryRoute => deliveryRoute.Start.Equals(route.Start, StringComparison.OrdinalIgnoreCase));
             foreach (var deliveryRoute in deliveryRoutesOfStart)
             {
-                FindRoutes
+                FindTheCheapestDeliveryCost
                 (
                     coveredRoute: path,
                     visited: ref visited,
                     route: deliveryRoute,
                     end: route.End,
-                    maxStop: (maxStop ?? int.MaxValue),
-                    currentStop: 1,
                     aggregateDeliveryCost: deliveryRoute.Cost,
                     currentCost: 0,
-                    maxDeliveryCost: (maxDeliveryCost ?? int.MaxValue),
-                    maxRouteRepeat: maxRouteRepeat,
                     allDeliveryRoutes: deliveryRoutes
                 );
             }
 
-            return _possibleRoute;
+            return _theCheapestDeliveryCost;
         }
 
-        private void FindRoutes(string coveredRoute, ref Dictionary<string, int> visited, DeliveryRoute route, string end, int maxStop, int currentStop,
-            int aggregateDeliveryCost, int currentCost, int maxDeliveryCost, int maxRouteRepeat, IEnumerable<DeliveryRoute> allDeliveryRoutes)
+        private void FindTheCheapestDeliveryCost(string coveredRoute, ref Dictionary<string, int> visited, DeliveryRoute route, string end, int aggregateDeliveryCost, int currentCost, IEnumerable<DeliveryRoute> allDeliveryRoutes)
         {
             aggregateDeliveryCost = UpdateAggregateDeliveryCost(aggregateDeliveryCost, currentCost);
-
-            if (CanRepeatRoute(maxRouteRepeat))
-                maxRouteRepeat = UpdateMaxRouteRepeat(maxRouteRepeat);
 
             if (!string.IsNullOrWhiteSpace(coveredRoute))
             {
                 UpdateVisited(coveredRoute, ref visited);
 
-                if (ExceedMaxRouteRepeat(coveredRoute, visited, maxRouteRepeat))
+                if (IsRepeated(coveredRoute, visited))
                     return;
             }
-
-            if (ExceedMaxDeliveryCost(aggregateDeliveryCost, maxDeliveryCost))
-                return;
 
             if (route.End.Equals(end, StringComparison.OrdinalIgnoreCase))
-            {
-                IncreasePossibleDeliveryRoute();
-
-                if (AbleToRepeatTheSameRoute(maxRouteRepeat))
-                    return;
-            }
-
-            if (ExceedMaxStop(maxStop, currentStop))
-                return;
-
-            currentStop = UpdateCurrentStop(currentStop);
+                UpdateTheCheapestDeliveryCost(aggregateDeliveryCost);
 
             var deliveryRoutes = allDeliveryRoutes.Where(deliveryRoute => deliveryRoute.Start.Equals(route.End, StringComparison.OrdinalIgnoreCase));
             foreach (var deliveryRoute in deliveryRoutes)
             {
                 coveredRoute = UpdateCoveredRoute(route.End, deliveryRoute);
 
-                FindRoutes
+                FindTheCheapestDeliveryCost
                 (
                     coveredRoute: coveredRoute,
                     visited: ref visited,
                     route: deliveryRoute,
                     end: end,
-                    maxStop: maxStop,
-                    currentStop: currentStop,
                     aggregateDeliveryCost: aggregateDeliveryCost,
                     currentCost: deliveryRoute.Cost,
-                    maxDeliveryCost: maxDeliveryCost,
-                    maxRouteRepeat: maxRouteRepeat,
                     allDeliveryRoutes: allDeliveryRoutes
                 );
 
@@ -148,10 +123,6 @@ namespace DS.Handlers
 
         private int UpdateAggregateDeliveryCost(int aggregateDeliveryCost, int currentCost) => aggregateDeliveryCost + currentCost;
 
-        private bool CanRepeatRoute(int maxRouteRepeat) => maxRouteRepeat > 1;
-
-        private int UpdateMaxRouteRepeat(int maxRouteRepeat) => ++maxRouteRepeat;
-
         private void UpdateVisited(string coveredRoute, ref Dictionary<string, int> visited)
         {
             if (visited.TryGetValue(coveredRoute, out var count))
@@ -160,17 +131,18 @@ namespace DS.Handlers
                 visited.Add(coveredRoute, 1);
         }
 
-        private bool ExceedMaxRouteRepeat(string coveredRoute, Dictionary<string, int> visited, int maxRouteRepeat) => visited[coveredRoute] > maxRouteRepeat;
+        private bool IsRepeated(string coveredRoute, Dictionary<string, int> visited)
+        {
+            visited.TryGetValue(coveredRoute, out var value);
 
-        private bool ExceedMaxDeliveryCost(int aggregateDeliveryCost, int maxDeliveryCost) => aggregateDeliveryCost >= maxDeliveryCost;
+            return value > 1;
+        }
 
-        private void IncreasePossibleDeliveryRoute() => ++_possibleRoute;
-
-        private bool AbleToRepeatTheSameRoute(int maxRouteRepeat) => maxRouteRepeat < 2;
-
-        private bool ExceedMaxStop(int maxStop, int currentStop) => currentStop >= maxStop;
-
-        private int UpdateCurrentStop(int currentStop) => ++currentStop;
+        private void UpdateTheCheapestDeliveryCost(int aggregateDeliveryCost)
+        {
+            if (aggregateDeliveryCost <= (_theCheapestDeliveryCost ?? int.MaxValue))
+                _theCheapestDeliveryCost = aggregateDeliveryCost;
+        }
 
         private string UpdateCoveredRoute(string start, DeliveryRoute deliveryRoute) => start + deliveryRoute.End;
 
