@@ -9,6 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handlers", "Handlers", "{B9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.Handlers.UnitTests", "DS.Handlers.UnitTests\DS.Handlers.UnitTests.csproj", "{C12B4F53-CCC9-461D-970A-AB625252986D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{74582A8A-2F92-4B87-95C6-BC80D4E89FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.Contracts", "DS.Contracts\DS.Contracts.csproj", "{74901DAA-AD74-4A28-A970-5F3B1A4646D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.Dtos", "DS.Dtos\DS.Dtos.csproj", "{AAD16472-86BC-415D-BC9A-E8E6964036C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +29,14 @@ Global
 		{C12B4F53-CCC9-461D-970A-AB625252986D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C12B4F53-CCC9-461D-970A-AB625252986D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C12B4F53-CCC9-461D-970A-AB625252986D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74901DAA-AD74-4A28-A970-5F3B1A4646D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74901DAA-AD74-4A28-A970-5F3B1A4646D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74901DAA-AD74-4A28-A970-5F3B1A4646D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74901DAA-AD74-4A28-A970-5F3B1A4646D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD16472-86BC-415D-BC9A-E8E6964036C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD16472-86BC-415D-BC9A-E8E6964036C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD16472-86BC-415D-BC9A-E8E6964036C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD16472-86BC-415D-BC9A-E8E6964036C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +44,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CD84B354-70B9-41AF-B94A-396EBEE2DBFF} = {B959F0A7-4462-40DE-BFE0-DF235290B5FA}
 		{C12B4F53-CCC9-461D-970A-AB625252986D} = {B959F0A7-4462-40DE-BFE0-DF235290B5FA}
+		{74901DAA-AD74-4A28-A970-5F3B1A4646D5} = {74582A8A-2F92-4B87-95C6-BC80D4E89FCB}
+		{AAD16472-86BC-415D-BC9A-E8E6964036C4} = {74582A8A-2F92-4B87-95C6-BC80D4E89FCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8CBAF0F-343D-49E1-9C2C-D611FDD73CC7}
