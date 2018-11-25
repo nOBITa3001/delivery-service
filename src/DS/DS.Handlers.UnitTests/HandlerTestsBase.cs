@@ -48,7 +48,7 @@ namespace DS.Handlers.UnitTests
             }
         }
 
-        protected void ThenErrorMessageShouldBe(string errorMessage) => Response.Messages.Single().Should().Be(errorMessage);
+        protected void ThenMessageShouldBe(string errorMessage) => Response.Messages.Single().Should().Be(errorMessage);
 
         protected void ThenPayloadShouldBeNull() => Response.Payload.Should().BeNull();
 

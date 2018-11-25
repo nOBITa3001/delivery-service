@@ -81,7 +81,7 @@ namespace DS.DomainModel.UnitTests.Entities
         }
 
         [Fact]
-        public void Create_WhenCreatingWithValidDto_ReturnsBooking()
+        public void Create_WhenCreatingWithValidDto_ReturnsRoute()
         {
             GivenValidDto();
 
