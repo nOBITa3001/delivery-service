@@ -98,7 +98,7 @@ namespace DS.Handlers
 
         private DeliveryRoute GetNestedDeliveryRoute(Route[] routes, int i, DeliveryRoute[] deliveryRoutesOfStart)
         {
-            return deliveryRoutesOfStart.FirstOrDefault(route => route.End.Equals(routes[i].End, StringComparison.OrdinalIgnoreCase));
+            return deliveryRoutesOfStart.FirstOrDefault(route => (route.End?.Equals(routes[i].End, StringComparison.OrdinalIgnoreCase) ?? false));
         }
 
         #endregion
