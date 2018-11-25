@@ -42,6 +42,7 @@ namespace DS.API.IntegrationTests.Controllers.V1
         }
 
         [Theory]
+        [InlineData("a-b-e", 4)]
         [InlineData("A-B-E", 4)]
         [InlineData("A-D", 10)]
         [InlineData("E-A-C-F", 8)]

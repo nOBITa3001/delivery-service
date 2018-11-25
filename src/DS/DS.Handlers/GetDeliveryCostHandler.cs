@@ -58,8 +58,8 @@ namespace DS.Handlers
             {
                 var dto = new CreateRouteDto
                 {
-                    Start = routes[i],
-                    End = routes[i + 1]
+                    Start = routes[i].ToUpper(),
+                    End = routes[i + 1].ToUpper()
                 };
 
                 result.Add(_routeFactory.Create(dto));
