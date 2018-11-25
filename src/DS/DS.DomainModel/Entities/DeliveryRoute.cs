@@ -28,7 +28,7 @@ namespace DS.DomainModel.Entities
         #endregion
 
         [Range(0, int.MaxValue, ErrorMessage = ResponseMessages.Validation.RangeInvalidTemplate)]
-        public int Cost { get; protected set; }
+        public virtual int Cost { get; protected set; }
 
         protected DeliveryRoute()
         {

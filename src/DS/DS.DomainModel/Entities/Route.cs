@@ -28,10 +28,10 @@ namespace DS.DomainModel.Entities
         #endregion
 
         [Required(ErrorMessage = ResponseMessages.Validation.StartRequired)]
-        public string Start { get; protected set; }
+        public virtual string Start { get; protected set; }
 
         [Required(ErrorMessage = ResponseMessages.Validation.EndRequired)]
-        public string End { get; protected set; }
+        public virtual string End { get; protected set; }
 
         protected Route()
         {

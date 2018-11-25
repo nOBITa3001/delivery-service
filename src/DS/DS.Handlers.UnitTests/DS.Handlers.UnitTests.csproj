@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DS.Contracts\DS.Contracts.csproj" />
+    <ProjectReference Include="..\DS.DomainModel\DS.DomainModel.csproj" />
     <ProjectReference Include="..\DS.Handlers\DS.Handlers.csproj" />
   </ItemGroup>
 

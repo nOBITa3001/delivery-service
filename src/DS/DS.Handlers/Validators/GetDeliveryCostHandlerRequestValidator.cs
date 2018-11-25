@@ -8,6 +8,7 @@ namespace DS.Handlers.Validators
         public GetDeliveryCostHandlerRequestValidator()
         {
             RuleFor(request => request.Route).NotEmpty();
+            RuleFor(request => request.Route).Matches(@"\w+-\w+(-\w)?");
         }
     }
 }
