@@ -7,14 +7,14 @@ using Xunit;
 
 namespace DS.API.IntegrationTests.Controllers.V1
 {
-    public class DeliveryRoutesControllerTests : ControllerTestsBase<GetDeliveryCostHandlerResponse>, IClassFixture<TestFixture>
+    public class DeliveryRoutesControllerGetCostTests : ControllerTestsBase<GetDeliveryCostHandlerResponse>, IClassFixture<TestFixture>
     {
         private const string _url = "api/v1/DeliveryRoutes";
         private readonly string _costUrlTemplate = $"{_url}/{{0}}/Cost";
         private const string _invalidRoute = "AB";
         private const string _nonExistingRoute = "A-D-F";
 
-        public DeliveryRoutesControllerTests(TestFixture fixture)
+        public DeliveryRoutesControllerGetCostTests(TestFixture fixture)
             : base(fixture.Client)
         {
         }
@@ -55,7 +55,7 @@ namespace DS.API.IntegrationTests.Controllers.V1
 
             ThenResponseShouldBeSuccessful();
             ThenPayloadShouldBeCorrect(expected);
-        }
+        } 
 
         #region Givens
 
