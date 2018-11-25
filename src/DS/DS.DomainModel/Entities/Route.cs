@@ -1,8 +1,8 @@
 ﻿using DS.DomainModel.Factories;
-using DS.DomainModel.Mappers;
 using DS.Dtos.Exceptions;
 using DS.Dtos.ResponseMessages;
 using DS.Dtos.Routes;
+using DS.Infrastructure.Mappers;
 using System.ComponentModel.DataAnnotations;
 
 namespace DS.DomainModel.Entities
