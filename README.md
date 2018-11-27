@@ -15,6 +15,12 @@ Please make sure that you have installed all bullets point before before running
 
 Following steps below to get a development env running
 
+### Cloning repository
+
+```
+λ git clone https://github.com/nOBITa3001/delivery-service.git
+```
+
 ### Using Visual Studio 2017
 
 ```
@@ -32,6 +38,8 @@ Following steps below to get a development env running
 λ dotnet run
 > Open web browser and go to http://localhost:5000/swagger or https://localhost:5001/swagger
 ```
+
+### Note: On the swagger page, you will see a required field for a version, please fill a number, i.e. 1
 
 ## Running automated tests
 
