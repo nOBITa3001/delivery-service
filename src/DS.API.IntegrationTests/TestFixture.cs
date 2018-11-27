@@ -33,7 +33,7 @@ namespace DS.API.IntegrationTests
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((context, configBuilder) =>
                 {
-                    configBuilder.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\DS.API"));
+                    configBuilder.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../../../DS.API"));
                     configBuilder.AddJsonFile("appsettings.json");
                     configBuilder.AddJsonFile("appsettings.Testing.json");
                 })
